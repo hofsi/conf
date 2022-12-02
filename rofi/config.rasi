@@ -1,0 +1,122 @@
+
+configuration {
+    show-icons: true;
+    drun-display-format: " {name}";
+    display-drun: "Apps";
+    modi: "drun";
+}
+
+*{
+    black:  #2f2c3e;
+    gray:   #426d6c;
+    green:  #55917f;
+    orange: #f5b82e;
+    yellow: #f9e812;
+    white:  #ffffda;
+    red:    #e94f37;
+    transp: #00000000;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+window {
+    background-color: @black;
+    text-color: @white;
+
+    border: 0px;
+    border-radius: 0px;
+    border-color: @black;
+
+    width: 1000;
+    x-offset: 0;
+    y-offset: 0;
+
+    anchor: center;
+    location: center;
+    children: [ inputbar, mainbox ];
+}
+
+inputbar {
+    children: [ prompt, entry ];
+    background-color: @transp;
+}
+
+prompt {
+    enabled: false;
+    padding: 0px;
+    margin: 0px;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    background-color: @black;
+    text-color: @black;
+}
+
+entry {
+    background-color: @black;
+    text-color: @white;
+    placeholder-color: @white;
+    expand: true;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+    padding: 0px;
+    blink: true;
+    font: "monospace 14";
+    placeholder: " Search for Applications ";
+}
+
+mainbox {
+    border: 0px 0px 0px 0px;
+    border-color: @black;
+    background-color: @black;
+    children: [ listview];
+    padding: 0px;
+}
+
+listview {
+    background-color: @black;
+    padding: 0px;
+    columns: 1;
+    lines: 14;
+    spacing: 0px;
+    cycle: false;
+    dynamic: true;
+    layout: vertical;
+    scrollbar: false;
+}
+
+element {
+    background-color: @black;
+    text-color: @orange;
+    orientation: horizontal;
+    padding: 0px;
+    
+}
+
+element-icon {
+    background-color: @black;
+    text-color: @white;
+    vertical-align: 0.5;
+    size: 32px;
+    border: 0px;
+}
+
+element-text {
+    enabled: true;
+    background-color: @black;
+    text-color: @white;
+    expand: true;
+    vertical-align: 0.5;
+    font: "monospace 13";
+}
+
+element selected {
+    background-color: @white;
+    text-color: @orange;
+    border: 2px;
+    border-radius: 0px;   
+    border-color: @yellow;
+}
+

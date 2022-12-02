@@ -1,0 +1,134 @@
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+"call plug#begin('~/.vim/plugged')
+
+"Plug 'preservim/nerdtree'
+"Plug 'vim-airline/vim-airline'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'frazrepo/vim-rainbow'
+
+" Initialize plugin system
+"call plug#end()
+
+
+set linebreak	
+set showbreak=+++
+set textwidth=0
+set showmatch
+
+"set list
+"set listchars=tab:>-
+
+set t_vb=
+set vb
+
+set hlsearch
+set smartcase
+set ignorecase
+set incsearch
+ 
+set autoindent
+set cindent
+set shiftwidth=4
+set smartindent
+set smarttab
+set softtabstop=4
+ 
+
+set ruler	
+
+syntax on
+
+
+set undolevels=1000	
+set backspace=indent,eol,start
+
+let g:airline#extensions#tabline#enabled = 1
+let g:rainbow_active = 1
+
+"Tab mgmt
+nmap <silent> gc :tabclose<CR>
+nmap <silent> gn :tabnew<CR>:e .<CR>
+nmap <silent> <C-e> :e .<CR>
+
+"All things cursor
+set guicursor+=a:blinkon0 "disable blinking
+if &term =~ "xterm\\|rxvt"
+	" 1 or 0 -> blinking block
+	" 2 -> solid block
+	" 3 -> blinking underscore
+	" 4 -> solid underscore
+	" 5 -> blinking vertical bar
+	" 6 -> solid vertical bar
+	let &t_SI .= "\<Esc>[6 q" " Normal
+	let &t_EI .= "\<Esc>[2 q" " Insert
+endif
+
+" Smart brackets
+inoremap "" ""<left>
+inoremap '' ''<left>
+inoremap () ()<left>
+inoremap [] []<left>
+inoremap {} {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+    
+"Line number Highlight
+set nu rnu
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+" completor
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> Tab_Or_Complete()
+
+function! Tab_Or_Complete() abort
+  " If completor is already open the `tab` cycles through suggested completions.
+  if pumvisible()
+    return "\<C-N>"
+  " If completor is not open and we are in the middle of typing a word then
+  " `tab` opens completor menu.
+  elseif col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^[[:keyword:][:ident:]]'
+    return "\<C-R>=completor#do('complete')\<CR>"
+  else
+    " If we aren't typing a word and we press `tab` simply do the normal `tab`
+    " action.
+    return "\<Tab>"
+  endif
+endfunction
+
+"Mouse select
+"set mouse-=a
+
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+

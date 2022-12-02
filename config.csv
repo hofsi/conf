@@ -1,1 +1,14 @@
 i3;.config
+gtk-3.0;.config
+gtk-2.0;.config
+qt5ct;.config
+qt6ct;.config
+rofi;.config
+alacritty;.config
+dunst;.config
+.vim;.
+.xinitrc;.
+.bashrc;.
+.bash_profile;.
+polybar;.config
+picom;.config
