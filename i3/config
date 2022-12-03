@@ -22,9 +22,7 @@ font monospace 14
 exec --no-startup-id "feh --bg-max --bg-fill --randomize ~/Pictures/Background/*"
 exec --no-startup-id "rm ~/.local/share/fonts/ter-*"
 exec --no-startup-id "cp ~/.local/share/fonts/terminus/* ~/.local/share/fonts"
-exec --no-startup-id polybar primary
-exec --no-startup-id polybar secondary
-exec --no-startup-id polybar tertiary
+exec --no-startup-id "bash ~/.config/polybar/launch.sh"
 
 # Removes window bar
 for_window [all] border pixel 0
