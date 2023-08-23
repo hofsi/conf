@@ -20,12 +20,10 @@ default_floating_border none
 hide_edge_borders none
 font monospace 14
 exec --no-startup-id "feh --bg-max --bg-fill --randomize ~/Pictures/Background/*"
-exec --no-startup-id "rm ~/.local/share/fonts/ter-*"
-exec --no-startup-id "cp ~/.local/share/fonts/terminus/* ~/.local/share/fonts"
 exec --no-startup-id "bash ~/.config/polybar/launch.sh"
 exec --no-startup-id "seaf-cli start"
-
-
+exec --no-startup-id "keepassxc" 
+exec --no-startup-id "redshift"
 # Removes window bar
 for_window [all] border pixel 0
 
@@ -38,7 +36,7 @@ for_window [all] border pixel 0
 # they are included here as an example. Modify as you see fit.
 
 #keybord layout
-exec --no-startup-id "setxkbmap -layout de -option 'caps:escape'"
+#exec --no-startup-id "setxkbmap -layout de -option 'caps:escape'"
 
 #start dunst
 exec --no-startup-id "/usr/bin/dunst"
@@ -66,7 +64,7 @@ bindsym $mod+Return exec alacritty
 
 # start program
 bindsym $mod+i exec firefox
-bindsym $mod+o exec brave
+bindsym $mod+o exec firefox --private-window
 bindsym $mod+p exec spotify
 bindsym $mod+u exec dolphin
 
@@ -144,9 +142,10 @@ bindsym $mod+a focus parent
 
 #Workspace management
 
-set $monc DP-2
-set $monr DVI-D-0
-set $monl HDMI-0
+set $monc primary
+set $monl DVI-D-0
+set $monr HDMI-0
+set $monv VGA1
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -161,13 +160,39 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+set $ws11 "11"
+set $ws12 "12"
+set $ws13 "13"
+set $ws14 "14"
+set $ws15 "15"
+set $ws16 "16"
+set $ws17 "17"
+set $ws18 "18"
+set $ws19 "19"
+set $ws20 "20"
+
 #bind monitor to workspace
 workspace $ws1 output $monc
 workspace $ws2 output $monc
+workspace $ws11 output $monc
+workspace $ws12 output $monc
+
 workspace $ws3 output $monl
 workspace $ws4 output $monl
+workspace $ws13 output $monl
+workspace $ws14 output $monl
+
 workspace $ws5 output $monr
 workspace $ws6 output $monr
+workspace $ws15 output $monr
+workspace $ws16 output $monr
+
+workspace $ws7 output $monv
+workspace $ws8 output $monv
+workspace $ws17 output $monv
+workspace $ws18 output $monv
+
+
 
 ##bind window to workspace
 for_window [class="firefox"] move container to $ws3
@@ -193,6 +218,18 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
+bindsym $mod+Mod1+1 workspace number $ws11
+bindsym $mod+Mod1+2 workspace number $ws12
+bindsym $mod+Mod1+3 workspace number $ws13
+bindsym $mod+Mod1+4 workspace number $ws14
+bindsym $mod+Mod1+5 workspace number $ws15
+bindsym $mod+Mod1+6 workspace number $ws16
+bindsym $mod+Mod1+7 workspace number $ws17
+bindsym $mod+Mod1+8 workspace number $ws18
+bindsym $mod+Mod1+9 workspace number $ws19
+bindsym $mod+Mod1+0 workspace number $ws20
+
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
@@ -204,6 +241,17 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+
+bindsym $mod+Mod1+Shift+1 move container to workspace number $ws11
+bindsym $mod+Mod1+Shift+2 move container to workspace number $ws12
+bindsym $mod+Mod1+Shift+3 move container to workspace number $ws13
+bindsym $mod+Mod1+Shift+4 move container to workspace number $ws14
+bindsym $mod+Mod1+Shift+5 move container to workspace number $ws15
+bindsym $mod+Mod1+Shift+6 move container to workspace number $ws16
+bindsym $mod+Mod1+Shift+7 move container to workspace number $ws17
+bindsym $mod+Mod1+Shift+8 move container to workspace number $ws18
+bindsym $mod+Mod1+Shift+9 move container to workspace number $ws19
+bindsym $mod+Mod1+Shift+0 move container to workspace number $ws20
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -260,8 +308,8 @@ bar {
         inactive_workspace #888888 #222222
         urgent_workspace   #ffffff #900000
     }
-
 }
+
 
 #gapsize
 gaps outer 0
@@ -285,7 +333,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-source-mute 1 toggle
  client.focused          $gray	$black	$white	$yellow $orange
  client.focused_inactive $gray	$black	$white	$yellow $orange
  client.unfocused        $gray	$black	$white	$yellow $orange
- client.urgent           $gray	$black	$whtie	$yellow $orange
+ client.urgent           $gray	$black	$white	$yellow $orange
  client.placeholder      $gray	$black	$white	$yellow $orange
  client.background       $gray
 

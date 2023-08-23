@@ -1,18 +1,3 @@
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
-"call plug#begin('~/.vim/plugged')
-
-"Plug 'preservim/nerdtree'
-"Plug 'vim-airline/vim-airline'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'frazrepo/vim-rainbow'
-
-" Initialize plugin system
-"call plug#end()
-
-
-set linebreak	
 set showbreak=+++
 set textwidth=0
 set showmatch
@@ -40,7 +25,6 @@ set ruler
 
 syntax on
 
-
 set undolevels=1000	
 set backspace=indent,eol,start
 
@@ -48,9 +32,12 @@ let g:airline#extensions#tabline#enabled = 1
 let g:rainbow_active = 1
 
 "Tab mgmt
-nmap <silent> gc :tabclose<CR>
-nmap <silent> gn :tabnew<CR>:e .<CR>
+nmap <silent> <C-Down> :tabclose<CR>
+nmap <silent> <C-Up> :tabnew<CR>:e .<CR>
 nmap <silent> <C-e> :e .<CR>
+nmap <silent> <C-Left> :tabprevious<CR>
+nmap <silent> <C-Right> :tabnext<CR>
+
 
 "All things cursor
 set guicursor+=a:blinkon0 "disable blinking
@@ -78,29 +65,8 @@ inoremap {;<CR> {<CR>};<ESC>O
 set nu rnu
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
-" completor
-
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <Tab> Tab_Or_Complete()
-
-function! Tab_Or_Complete() abort
-  " If completor is already open the `tab` cycles through suggested completions.
-  if pumvisible()
-    return "\<C-N>"
-  " If completor is not open and we are in the middle of typing a word then
-  " `tab` opens completor menu.
-  elseif col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^[[:keyword:][:ident:]]'
-    return "\<C-R>=completor#do('complete')\<CR>"
-  else
-    " If we aren't typing a word and we press `tab` simply do the normal `tab`
-    " action.
-    return "\<Tab>"
-  endif
-endfunction
-
 "Mouse select
-"set mouse-=a
+set mouse=a
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -131,4 +97,44 @@ if has("nvim-0.5.0") || has("patch-8.1.1564")
 else
   set signcolumn=yes
 endif
+
+"Save with Sudo
+command Swrite execute 'w !sudo tee "%"'
+
+"Plugins
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
+Plug 'rust-lang/rust.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'frazrepo/vim-rainbow'
+Plug 'joshdick/onedark.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'valloric/youcompleteme'
+call plug#end()
+
+colorscheme onedark
+
+"syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"NERDTree settings
+nmap <F1> <nop>
+nmap <silent> <F1> :NERDTreeToggle<CR>
+
+" Enable rainbow Parentheses
+let g:rainbow_active = 1
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+
+let g:airline_theme='onedark'
+
 
